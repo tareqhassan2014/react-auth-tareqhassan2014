@@ -3,13 +3,14 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Contact from "./components/Contact/Contact";
 import Destination from "./components/Destination/Destination";
+import SignInSignUpContainer from "./components/SignUp/SignInSignUpContainer";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import LogIn from "./components/LogIn/LogIn";
+
+
 
 
 
@@ -30,7 +31,7 @@ export default function App() {
           <Destination />
         </Route>
         <Route path='/login'>
-          <LogIn />
+          <SignInSignUpContainer />
         </Route>
       </Switch>
     </Router>
