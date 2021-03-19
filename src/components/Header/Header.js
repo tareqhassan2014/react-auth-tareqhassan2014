@@ -68,7 +68,7 @@ const Header = props => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title} >
-            Photos
+            BD Riders
           </Typography>
           {isMobile ? (
             <>
