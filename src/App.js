@@ -3,7 +3,7 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Contact from "./components/Contact/Contact";
 import Destination from "./components/Destination/Destination";
-import SignInSignUpContainer from "./components/SignUp/SignInSignUpContainer";
+import SignInSignUpContainer from "./components/SignInSignUpContainer/SignInSignUpContainer";
 import {
   BrowserRouter as Router,
   Switch,
