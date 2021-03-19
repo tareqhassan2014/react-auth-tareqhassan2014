@@ -1,10 +1,12 @@
-import { Avatar, Button, Checkbox, FormControl, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Checkbox, Divider, FormControl, FormControlLabel, Grid, Link, Paper, TextField, Typography } from '@material-ui/core';
 import React from 'react';
-import LockIcon from '@material-ui/icons/Lock';
 import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
 import { useForm } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faGooglePlusG } from '@fortawesome/free-brands-svg-icons'
 
-
+const faFacebookIcon = <FontAwesomeIcon icon={faFacebook} size='2x' />
+const faGoogleIcon = <FontAwesomeIcon icon={faGooglePlusG} size='2x' />
 const paperStyle = { padding: "30px 20px", width: 300, margin: "0 auto" }
 
 const SignIn = ({ handleChange }) => {
@@ -18,13 +20,6 @@ const SignIn = ({ handleChange }) => {
     return (
         <Grid>
             <Paper style={paperStyle}>
-                <Grid align="center">
-                    <Avatar style={{ backgroundColor: "pink" }}>
-                        <LockIcon />
-                    </Avatar>
-                    <h2 style={{ margin: 0 }}>Sign In</h2>
-                    <Typography varient="caption" gutterBottom={true}>please fill this form to Sign In.</Typography>
-                </Grid>
                 <form onSubmit={handleSubmit(onSubmit)} >
 
                     {/* 2) TextField */}
@@ -96,6 +91,9 @@ const SignIn = ({ handleChange }) => {
                         </Link>
                     </Typography>
                 </form>
+                <Divider />
+                <Button variant="contained" fullWidth style={{ marginTop: 5 }}> {faGoogleIcon} Log in with google</Button>
+                <Button variant="contained" fullWidth style={{ marginTop: 5 }}> {faFacebookIcon} Log in with facebook</Button>
             </Paper>
         </Grid>
     );
