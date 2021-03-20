@@ -1,8 +1,9 @@
-import React from "react";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Contact from "./components/Contact/Contact";
+import React, { createContext, useState } from 'react';
 import Destination from "./components/Destination/Destination";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import SignInSignUpContainer from "./components/SignInSignUpContainer/SignInSignUpContainer";
 import {
   BrowserRouter as Router,
@@ -11,29 +12,39 @@ import {
 } from "react-router-dom";
 
 
-
+export const UserContext = createContext();
 
 
 
 export default function App() {
 
+  const [logedInUser, setLogedInUser] = useState({
+    logedInUser: true,
+    signinuser: false
+  });
+
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-        <Route path='/contact'>
-          <Contact />
-        </Route>
-        <Route path='/destination'>
-          <Destination />
-        </Route>
-        <Route path='/login'>
-          <SignInSignUpContainer />
-        </Route>
-      </Switch>
-    </Router>
+    <UserContext.Provider value={[logedInUser, setLogedInUser]}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <PrivateRoute path='/vehicle/:id'>
+            <Destination />
+          </PrivateRoute>
+          <PrivateRoute path='/destination'>
+            <Destination />
+          </PrivateRoute>
+          <Route path='/login'>
+            <SignInSignUpContainer />
+          </Route>
+          <Route path='/contact'>
+            <Contact />
+          </Route>
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }

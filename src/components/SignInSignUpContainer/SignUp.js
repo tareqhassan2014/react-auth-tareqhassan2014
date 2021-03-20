@@ -1,23 +1,80 @@
-import { Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid, Link, Paper, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
+import "firebase/auth";
+import firebase from "firebase/app";
+import { UserContext } from "../../App";
 import { useForm } from 'react-hook-form';
+import React, { useContext } from 'react';
+import { firebaseConfig } from "./firebase.config";
+import { useHistory, useLocation } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGooglePlusG } from '@fortawesome/free-brands-svg-icons'
+import { useStyles } from '@material-ui/pickers/views/Calendar/SlideTransition';
+import { Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid, Link, Paper, TextField, Typography } from '@material-ui/core';
+
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 const faFacebookIcon = <FontAwesomeIcon icon={faFacebook} size='2x' />
 const faGoogleIcon = <FontAwesomeIcon icon={faGooglePlusG} size='2x' />
 
 
-const paperStyle = { padding: "30px 20px", width: 300, margin: "0 auto" }
+const paperStyle = { padding: "30px 20px", width: 340, margin: "0 auto" }
 
-const SignUp = ({handleChange}) => {
-
-
+const SignUp = ({ handleChange }) => {
     const classes = useStyles();
+
+    const [logedInUser, setLogedInUser] = useContext(UserContext);
+
     const { register, handleSubmit, errors } = useForm();
-    const onSubmit = data => console.log(data);
-    console.log(errors);
+
+
+    const onSubmit = data => {
+        console.log(data);
+        console.log(errors);
+
+        firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+            .then((userCredential) => {
+                // var user = userCredential.user;
+                
+            })
+            .catch((error) => {
+                // var errorCode = error.code;
+                // var errorMessage = error.message;
+                // ..
+            });
+    }
+
+
+
+
+    const history = useHistory();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
+
+
+
+
+    const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    const FacebookAuthProvider = new firebase.auth.FacebookAuthProvider();
+
+    const handelSignin = (provider) => {
+
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                const sigedinUser = { ...logedInUser, ...result.user };
+                console.log(logedInUser);
+                setLogedInUser(sigedinUser);
+                history.replace(from);
+            }).catch((error) => {
+                var errorMessage = error.message;
+                console.log(errorMessage);
+            });
+    }
+
+
+
 
     return (
         <Grid>
@@ -32,12 +89,12 @@ const SignUp = ({handleChange}) => {
                         variant="outlined"
                         fullWidth
                         className={classes.inputField}
-                        name='name'
+                        name='displayName'
                         inputRef={register({
                             required: 'name is required.'
                         })}
-                        error={Boolean(errors.name)}
-                        helperText={errors.name?.message}
+                        error={Boolean(errors.displayName)}
+                        helperText={errors.displayName?.message}
                     />
 
                     {/* 2) TextField */}
@@ -126,8 +183,8 @@ const SignUp = ({handleChange}) => {
                     </Typography>
                 </form>
                 <Divider />
-                <Button variant="contained" fullWidth style={{ marginTop: 5 }}> {faGoogleIcon} Log in with google</Button>
-                <Button variant="contained" fullWidth style={{ marginTop: 5 }}> {faFacebookIcon} Log in with facebook</Button>
+                <Button variant="contained" onClick={() => handelSignin(GoogleAuthProvider)} fullWidth style={{ marginTop: 5 }}> {faGoogleIcon} Log in with google</Button>
+                <Button variant="contained" onClick={() => handelSignin(FacebookAuthProvider)} fullWidth style={{ marginTop: 5 }}> {faFacebookIcon} Log in with facebook</Button>
             </Paper>
         </Grid>
     );

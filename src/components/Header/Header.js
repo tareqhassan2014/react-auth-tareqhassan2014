@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,6 +10,8 @@ import Menu from "@material-ui/core/Menu";
 import Button from "@material-ui/core/Button";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { withRouter } from "react-router-dom";
+import { UserContext } from "../../App";
+import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,17 +53,24 @@ const Header = props => {
   const menuItems = [
     {
       menuTitle: "Home",
-      pageURL: "/"
+      pageURL: "/",
+      id: 110
     },
     {
       menuTitle: "Contact",
-      pageURL: "/contact"
+      pageURL: "/contact",
+      id: 210
     },
     {
       menuTitle: "Destination",
-      pageURL: "/destination"
+      pageURL: "/destination",
+      id: 310
     }
   ];
+
+
+  const [logedInUser] = useContext(UserContext);
+
 
   return (
     <div className={classes.root}>
@@ -97,9 +106,9 @@ const Header = props => {
                 onClose={() => setAnchorEl(null)}
               >
                 {menuItems.map(menuItem => {
-                  const { menuTitle, pageURL } = menuItem;
+                  const { menuTitle, pageURL, id } = menuItem;
                   return (
-                    <MenuItem onClick={() => handleMenuClick(pageURL)}>
+                    <MenuItem onClick={() => handleMenuClick(pageURL)} key={id}>
                       {menuTitle}
                     </MenuItem>
                   );
@@ -126,12 +135,16 @@ const Header = props => {
               >
                 Destination
               </Button>
-              <Button
-                color="secondary"
-                onClick={() => handleButtonClick("/login")}
-              >
-                Login
+              {
+                logedInUser.displayName ? <Avatar><img src={logedInUser.photoURL} alt="" /></Avatar> :
+
+                  <Button
+                    color="secondary"
+                    onClick={() => handleButtonClick("/login")}
+                  >
+                    Login
               </Button>
+              }
             </div>
           )}
         </Toolbar>
