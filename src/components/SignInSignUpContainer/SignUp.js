@@ -31,14 +31,31 @@ const SignUp = ({ handleChange }) => {
     });
 
 
+
+    const updateUserInfo = (name) => {
+        var user = firebase.auth().currentUser;
+
+        user.updateProfile({
+            displayName: name,
+        }).then(function () {
+            // Update successful.
+            console.log('update Profile successfully');
+        }).catch(function (error) {
+            // An error happened.
+            console.log(error);
+        });
+    }
+
+
+
     const onSubmit = data => {
         console.log(data);
         console.log(errors);
-
+        
         firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then((userCredential) => {
                 // var user = userCredential.user;
-
+                updateUserInfo(data.displayName);
             })
             .catch((error) => {
                 // var errorCode = error.code;
@@ -156,7 +173,7 @@ const SignUp = ({ handleChange }) => {
                         name='confirmPassword'
                         inputRef={register({
                             required: "Confirm your password.",
-                            validate: value => value === getValues('password') || "Password doesn't match." 
+                            validate: value => value === getValues('password') || "Password doesn't match."
                         })}
                         error={Boolean(errors.confirmPassword)}
                         helperText={errors.confirmPassword?.message}

@@ -68,7 +68,6 @@ const SignIn = ({ handleChange }) => {
                 const sigedinUser = { ...logedInUser, ...result.user };
                 setLogedInUser(sigedinUser);
                 history.replace(from);
-                console.log(logedInUser);
             }).catch((error) => {
                 var errorMessage = error.message;
                 console.log(errorMessage);

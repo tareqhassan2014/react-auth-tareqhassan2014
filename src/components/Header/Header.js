@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../App";
-import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -143,14 +142,19 @@ const Header = props => {
                 CONTACT
               </Button>
               {
-                logedInUser.displayName ? <Avatar><img src={logedInUser.photoURL} alt="" /></Avatar> :
+                logedInUser.displayName ? <Button
+                  style={{ color: 'white' }}
+                  onClick={() => handleButtonClick("/profile")}
+                >
+                  {logedInUser.displayName}
+                </Button> :
 
                   <Button
                     color="secondary"
                     onClick={() => handleButtonClick("/login")}
                   >
                     Login
-              </Button>
+                  </Button>
               }
             </div>
           )}

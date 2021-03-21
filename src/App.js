@@ -11,6 +11,7 @@ import {
   Route
 } from "react-router-dom";
 import Blog from "./components/Blog/Blog";
+import Profile from "./components/Profile/Profile";
 
 
 export const UserContext = createContext();
@@ -19,10 +20,7 @@ export const UserContext = createContext();
 
 export default function App() {
 
-  const [logedInUser, setLogedInUser] = useState({
-    logedInUser: true,
-    signinuser: false
-  });
+  const [logedInUser, setLogedInUser] = useState({});
 
   return (
     <UserContext.Provider value={[logedInUser, setLogedInUser]}>
@@ -32,10 +30,10 @@ export default function App() {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route  path='/home'>
+          <Route path='/home'>
             <Home />
           </Route>
-          <Route  path='/blog'>
+          <Route path='/blog'>
             <Blog />
           </Route>
           <PrivateRoute path='/vehicle/:id'>
@@ -43,6 +41,9 @@ export default function App() {
           </PrivateRoute>
           <PrivateRoute path='/destination'>
             <Destination />
+          </PrivateRoute>
+          <PrivateRoute path='/profile'>
+            <Profile />
           </PrivateRoute>
           <Route path='/login'>
             <SignInSignUpContainer />
