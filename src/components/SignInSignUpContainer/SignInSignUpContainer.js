@@ -39,7 +39,7 @@ const SignInSignUpContainer = () => {
 
 
     return (
-        <Paper elevation={20} style={{ width: 340, margin: '20px auto' }}>
+        <Paper elevation={20} style={{ width: 320, margin: '20px auto' }}>
             <Tabs
                 value={value}
                 indicatorColor="primary"

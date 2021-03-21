@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 2
+    flexGrow: 2,
+    cursor: 'pointer'
   },
   headerOptions: {
     display: "flex",
@@ -76,7 +77,7 @@ const Header = props => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title} >
+          <Typography variant="h6" className={classes.title} onClick={() => handleButtonClick("/")} >
             BD Riders
           </Typography>
           {isMobile ? (
@@ -125,15 +126,21 @@ const Header = props => {
               </Button>
               <Button
                 style={{ color: 'white' }}
-                onClick={() => handleButtonClick("/contact")}
-              >
-                CONTACT
-              </Button>
-              <Button
-                style={{ color: 'white' }}
                 onClick={() => handleButtonClick("/destination")}
               >
                 Destination
+              </Button>
+              <Button
+                style={{ color: 'white' }}
+                onClick={() => handleButtonClick("/blog")}
+              >
+                Blog
+              </Button>
+              <Button
+                style={{ color: 'white' }}
+                onClick={() => handleButtonClick("/contact")}
+              >
+                CONTACT
               </Button>
               {
                 logedInUser.displayName ? <Avatar><img src={logedInUser.photoURL} alt="" /></Avatar> :

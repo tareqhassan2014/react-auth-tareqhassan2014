@@ -19,14 +19,16 @@ const faFacebookIcon = <FontAwesomeIcon icon={faFacebook} size='2x' />
 const faGoogleIcon = <FontAwesomeIcon icon={faGooglePlusG} size='2x' />
 
 
-const paperStyle = { padding: "30px 20px", width: 340, margin: "0 auto" }
+const paperStyle = { padding: "30px 20px", width: 320, margin: "0 auto" }
 
 const SignIn = ({ handleChange }) => {
     const classes = useStyles();
 
     const [logedInUser, setLogedInUser] = useContext(UserContext);
 
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm({
+        mode:'onChange',
+    });
 
     const onSubmit = data => {
         console.log(data);
@@ -90,7 +92,11 @@ const SignIn = ({ handleChange }) => {
                         className={classes.inputField}
                         name='email'
                         inputRef={register({
-                            required: 'email is required.'
+                            required: 'email is required.',
+                            pattern: {
+                                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                message: 'Please enter a valid email address.'
+                            },
                         })}
                         error={Boolean(errors.email)}
                         helperText={errors.email?.message}
@@ -107,7 +113,11 @@ const SignIn = ({ handleChange }) => {
                         className={classes.inputField}
                         name='password'
                         inputRef={register({
-                            required: 'password is required.'
+                            required: 'Password required.',
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/,
+                                message: ' Password (1 UpperCase, 1 LowerCase, 1 Number/SpecialChar and Min 4 characters)'
+                            },
                         })}
                         error={Boolean(errors.password)}
                         helperText={errors.password?.message}

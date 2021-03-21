@@ -19,14 +19,16 @@ const faFacebookIcon = <FontAwesomeIcon icon={faFacebook} size='2x' />
 const faGoogleIcon = <FontAwesomeIcon icon={faGooglePlusG} size='2x' />
 
 
-const paperStyle = { padding: "30px 20px", width: 340, margin: "0 auto" }
+const paperStyle = { padding: "30px 20px", width: 320, margin: "0 auto" }
 
 const SignUp = ({ handleChange }) => {
     const classes = useStyles();
 
     const [logedInUser, setLogedInUser] = useContext(UserContext);
 
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, getValues, errors } = useForm({
+        mode: 'onChange',
+    });
 
 
     const onSubmit = data => {
@@ -36,7 +38,7 @@ const SignUp = ({ handleChange }) => {
         firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then((userCredential) => {
                 // var user = userCredential.user;
-                
+
             })
             .catch((error) => {
                 // var errorCode = error.code;
@@ -91,7 +93,11 @@ const SignUp = ({ handleChange }) => {
                         className={classes.inputField}
                         name='displayName'
                         inputRef={register({
-                            required: 'name is required.'
+                            required: 'Name is required.',
+                            pattern: {
+                                value: /^([\w]{3,})+\s+([\w\s]{3,})+$/i,
+                                message: 'first and last name should 3 characters'
+                            },
                         })}
                         error={Boolean(errors.displayName)}
                         helperText={errors.displayName?.message}
@@ -107,7 +113,11 @@ const SignUp = ({ handleChange }) => {
                         className={classes.inputField}
                         name='email'
                         inputRef={register({
-                            required: 'email is required.'
+                            required: 'email is required.',
+                            pattern: {
+                                value: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                message: 'Please enter a valid email address.'
+                            },
                         })}
                         error={Boolean(errors.email)}
                         helperText={errors.email?.message}
@@ -124,7 +134,11 @@ const SignUp = ({ handleChange }) => {
                         className={classes.inputField}
                         name='password'
                         inputRef={register({
-                            required: 'password is required.'
+                            required: 'Password required.',
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,}$/,
+                                message: ' Password (1 UpperCase, 1 LowerCase, 1 Number/SpecialChar and Min 4 characters)'
+                            },
                         })}
                         error={Boolean(errors.password)}
                         helperText={errors.password?.message}
@@ -141,7 +155,8 @@ const SignUp = ({ handleChange }) => {
                         className={classes.inputField}
                         name='confirmPassword'
                         inputRef={register({
-                            required: "Confirm your password."
+                            required: "Confirm your password.",
+                            validate: value => value === getValues('password') || "Password doesn't match." 
                         })}
                         error={Boolean(errors.confirmPassword)}
                         helperText={errors.confirmPassword?.message}

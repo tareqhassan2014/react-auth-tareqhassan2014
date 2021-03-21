@@ -10,6 +10,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Blog from "./components/Blog/Blog";
 
 
 export const UserContext = createContext();
@@ -30,6 +31,12 @@ export default function App() {
         <Switch>
           <Route exact path='/'>
             <Home />
+          </Route>
+          <Route  path='/home'>
+            <Home />
+          </Route>
+          <Route  path='/blog'>
+            <Blog />
           </Route>
           <PrivateRoute path='/vehicle/:id'>
             <Destination />
