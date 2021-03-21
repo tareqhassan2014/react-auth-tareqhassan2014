@@ -1,3 +1,4 @@
+import Map from '../Map/Map';
 import { useParams } from 'react-router';
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from 'react';
@@ -34,9 +35,6 @@ const Destination = () => {
 
 
 
-    const [destination, setDestination] = useState({})
-
-
 
 
 
@@ -44,9 +42,7 @@ const Destination = () => {
     // console.log(logedInUser);
 
     const onSubmit = data => {
-
-        setDestination(data);
-        console.log(destination);
+        console.log(data);
         const newBoxStyle = { ...serchBoxStyle }
         newBoxStyle.display = false;
         setSerchBoxStyle(newBoxStyle)
@@ -57,8 +53,8 @@ const Destination = () => {
 
 
     return (
-        <div className='d-flex'>
-            <div>
+        <div className='d-md-flex'>
+            <div className="col-md-4 py-5">
                 <Grid >
                     <Paper style={paperStyle}>
                         {
@@ -115,8 +111,8 @@ const Destination = () => {
                     </Paper>
                 </Grid>
             </div>
-            <div>
-                <img src="https://i.ibb.co/ggRdB0C/Map.png" alt="" />
+            <div className="col-md-8 pt-3" style={{ maxWidth: "1200px" }}>
+                <Map />
             </div>
         </div>
 
