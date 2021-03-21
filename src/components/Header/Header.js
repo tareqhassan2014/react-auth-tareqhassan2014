@@ -154,3 +154,8 @@ const Header = props => {
 };
 
 export default withRouter(Header);
+
+
+// const number = "Tareq Hassan";
+// const numberIterator = number[Symbol.iterator]();
+// numberIterator.next().value;

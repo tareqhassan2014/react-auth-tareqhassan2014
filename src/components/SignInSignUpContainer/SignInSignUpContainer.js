@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -20,7 +20,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box>
-                    <Typography>{children}</Typography>
+                    <Grid>{children}</Grid>
                 </Box>
             )}
         </div>
